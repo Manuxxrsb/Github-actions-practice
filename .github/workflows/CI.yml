@@ -1,0 +1,36 @@
+# This is a basic workflow to help you get started with Actions
+name: Integracion continua (CI)
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  #Defino el evento de ejecucion al que responde la action
+  push:
+    branches: [ "main" ] 
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # Selecciono el ejecutor
+    runs-on: ubuntu-latest
+
+    # Definicion de pasos a ejecutar
+    steps:
+      # Extrae su repositorio en $GITHUB_WORKSPACE, para que su trabajo pueda acceder a él 
+      - uses: actions/checkout@v4
+
+      # Ejecucion de un Script de una linea
+      - name: Primer Paso
+        run: echo Hola Muundo!
+
+      # Ejecucion de un Script de varias lineas
+      - name: Run a multi-line script
+        run: |
+          echo Añadiendo otro echo,
+          echo Prueba y deploy del programa.
