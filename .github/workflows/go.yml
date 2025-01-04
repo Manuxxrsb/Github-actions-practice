@@ -5,25 +5,43 @@ name: Go
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
+
+env:
+  DB_HOST: ${{ secrets.DB_HOST }}
+  DB_PORT: ${{ secrets.DB_PORT }}
+  DB_USER: ${{ secrets.DB_USER }}
+  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+  DB_NAME: ${{ secrets.DB_NAME }}
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
     steps:
-    #Accedemos al repositorio
-    - uses: actions/checkout@v4
-    #Script de construccion de go en la maquina virtual
-    - name: Construyendo GO
-      uses: actions/setup-go@v4
-      with:
-        go-version: '1.20'
-    #Script de Construccion de la aplicacion
-    - name: Build de la aplicacion
-      run: go build -v ./...
+      #Accedemos al repositorio
+      - uses: actions/checkout@v4
+      #Script de construccion de go en la maquina virtual
+      - name: Construyendo GO
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.20"
+      #Script de Construccion de la aplicacion
+      - name: Build de la aplicacion
+        run: go build -v ./...
 
-    - name: Mensaje de finalizacion
-      run: echo Proceso finalizado son problemas
+      #Script de ejecucion de la aplicacion
+      - name: Ejecucion de la aplicacion
+        run: go run main.go
+
+      - name: Mostrar las variables de entorno
+        run: |
+          echo ${{secrets.DB_HOST}}
+          echo ${{secrets.DB_PORT}}
+          echo ${{secrets.DB_USER}}
+          echo ${{secrets.DB_PASSWORD}}
+          echo ${{secrets.DB_NAME}}
+
+      - name: Mensaje de finalizacion
+        run: echo Proceso finalizado son problemas
