@@ -27,9 +27,6 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: "1.20"
-      #Script de Construccion de la aplicacion
-      - name: Build de la aplicacion
-        run: go build -v ./...
 
       #Script de ejecucion de la aplicacion
       - name: Ejecucion de la aplicacion
